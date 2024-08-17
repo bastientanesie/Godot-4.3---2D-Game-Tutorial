@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://b538bfbygj40p"]
+
+[ext_resource type="Texture2D" uid="uid://ccc2dwbssndu4" path="res://art/enemyFlyingAlt_1.png" id="1_eco1p"]
+[ext_resource type="Script" path="res://scenes/mob.gd" id="1_g2dag"]
+[ext_resource type="Texture2D" uid="uid://dhe6ss7ylol44" path="res://art/enemyFlyingAlt_2.png" id="2_01fts"]
+[ext_resource type="Texture2D" uid="uid://bw84ufoh00xf5" path="res://art/enemySwimming_1.png" id="3_s416c"]
+[ext_resource type="Texture2D" uid="uid://bewauojggp8ct" path="res://art/enemySwimming_2.png" id="4_il1br"]
+[ext_resource type="Texture2D" uid="uid://dkpwmqaly3mty" path="res://art/enemyWalking_1.png" id="5_vksod"]
+[ext_resource type="Texture2D" uid="uid://dx62ide8hk024" path="res://art/enemyWalking_2.png" id="6_sdkwh"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4p8ek"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_eco1p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_01fts")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_s416c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_il1br")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_vksod")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_sdkwh")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 3.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jfsrx"]
+radius = 35.0
+height = 88.0
+
+[node name="Mob" type="RigidBody2D" groups=["enemies", "mobs"]]
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_g2dag")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_4p8ek")
+animation = &"fly"
+frame_progress = 0.904546
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_jfsrx")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+rotation = -0.000268074
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]
